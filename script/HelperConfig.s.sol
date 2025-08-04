@@ -31,7 +31,7 @@ contract HelperConfig is Script {
         }
     }
 
-    function getSepoliaEthConfig() public returns (NetworkConfig memory) {
+    function getSepoliaEthConfig() public view returns (NetworkConfig memory) {
         return NetworkConfig({
             weth: 0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9,
             wbtc: 0x92f3B59a79bFf5dc60c0d59eA13a44D082B2bdFC,

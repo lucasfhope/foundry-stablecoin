@@ -552,5 +552,20 @@ contract DSCEngineTest is Test {
         assertEq(actualLiquidationPrecision, expectedLiquidationPrecision);
     }
 
+    function testLiquidationBonus() public {
+        uint256 expectedLiquidationBonus = 10; // 10% bonus
+        uint256 actualLiquidationBonus = engine.getLiquidationBonus();
+        assertEq(actualLiquidationBonus, expectedLiquidationBonus);
+    }
+
+    function testPrecisionAndAdditionalPriceFeedPrecision() public {
+        uint256 expectedPrecision = 1e18;
+        uint256 actualPrecision = engine.getPrecision();
+        assertEq(actualPrecision, expectedPrecision);
+
+        uint256 expectedAdditionalPriceFeedPrecision = 1e10;
+        uint256 actualAdditionalPriceFeedPrecision = engine.getAdditionalPriceFeedPrecision();
+        assertEq(actualAdditionalPriceFeedPrecision, expectedAdditionalPriceFeedPrecision);
+    }
 
 }
