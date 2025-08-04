@@ -15,7 +15,7 @@ import {DSCEngine} from "src/DSCEngine.sol";
 import {DecentralizedStableCoin} from "src/DecentralizedStableCoin.sol";
 import {HelperConfig} from "script/HelperConfig.s.sol";
 import {IERC20} from "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
-import {Handler} from "test/fuzz/Handler.t.sol";
+import {Handler} from "test/fuzz/failOnRevert/Handler.t.sol";
 
 contract Invariants is StdInvariant, Test{
     DeployDSC deployer;
@@ -46,5 +46,26 @@ contract Invariants is StdInvariant, Test{
             dscEngine.getUsdValue(wbtc, totalWbtc);
 
         assert(totalCollateralValue >= totalDscSupply);
+    }
+
+    function invariant_gettersShouldNotRevert() external view {
+        // This is an evergreen invariant, meaning it should always hold true
+        // regardless of the state of the contract.
+        // getAccountCollateralValue(address);
+        // getAccountInformation(address);
+        dscEngine.getAdditionalPriceFeedPrecision();
+        // getCollateralBalanceOfUser(address,address);
+        // getCollateralTokenBalanceOfUser(address,address);
+        // getCollateralTokenPriceFeed(address);
+        dscEngine.getCollateralTokens();
+        dscEngine.getDscAddress();
+        // getHealthFactor(address);
+        dscEngine.getLiquidationBonus();
+        dscEngine.getLiquidationPrecision();
+        dscEngine.getLiquidationThreshold();
+        dscEngine.getMinHealthFactor();
+        dscEngine.getPrecision();
+        // getTokenAmountFromUsd(address,uint256);
+        // getUsdValue(address,uint256);
     }
 }

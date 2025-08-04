@@ -5,6 +5,7 @@ import {DecentralizedStableCoin} from "src/DecentralizedStableCoin.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+import {OracleLib} from "src/libraries/OracleLib.sol";
 
 /**
  * @title DSCEngine
@@ -38,6 +39,12 @@ contract DSCEngine is ReentrancyGuard {
     error DSCEngine__HealthFactorIsOk(uint256 healthFactor);
     error DSCEngine__HealthFactorNotImproved(uint256 startingHealthFactor, uint256 endingHealthFactor);
     error DSCEngine__AmountExceedsBalance(uint256 amount, uint256 balance);
+
+    /////////////////
+    // Types    /////
+    /////////////////
+    using OracleLib for AggregatorV3Interface;
+
 
     //////////////////////
     // State Variables  //
@@ -321,7 +328,7 @@ contract DSCEngine is ReentrancyGuard {
         // $/ETH ETH ??
         // $2000 / 1 ETH, $1000 = 0.5 ETH
         AggregatorV3Interface priceFeed = AggregatorV3Interface(s_priceFeeds[token]);
-        (, int256 price,,,) = priceFeed.latestRoundData();
+        (, int256 price,,,) = priceFeed.stalePriceCheckLatestRoundData();
         return (usdAmountInWei * PRECISION) / (uint256(price) * ADDITIONAL_PRICE_FEED_PRECISION);
     }
 
