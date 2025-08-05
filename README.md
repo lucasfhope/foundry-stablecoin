@@ -16,6 +16,6 @@ Base on https://github.com/Cyfrin/foundry-defi-stablecoin-cu.git
 
 
 
-## Set keystore wallet private key as environment variable, the remove it
+## Set keystore wallet private key as environment variable, then remove it
 source ./decryptKey.sh
 unset $PRIVATE_KEY
